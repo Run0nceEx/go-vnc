@@ -1,7 +1,8 @@
 // Package vnc implements a VNC client.
 //
 // References:
-//   [PROTOCOL]: http://tools.ietf.org/html/rfc6143
+//
+//	[PROTOCOL]: http://tools.ietf.org/html/rfc6143
 package vnc
 
 import (
@@ -311,11 +312,8 @@ func (c *ClientConn) handshake() error {
 	if err != nil {
 		return err
 	}
-	if maxMajor < 3 {
-		return fmt.Errorf("unsupported major version, less than 3: %d", maxMajor)
-	}
-	if maxMinor < 8 {
-		return fmt.Errorf("unsupported minor version, less than 8: %d", maxMinor)
+	if maxMajor < 3 && maxMinor < 8 {
+		return fmt.Errorf("unsupported major or maxMinor version, less than 3: %d", maxMajor)
 	}
 
 	// Respond with the version we will support
